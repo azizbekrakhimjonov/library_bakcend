@@ -1,0 +1,174 @@
+{% load static %}
+<!--<!DOCTYPE html>-->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documents</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/slick.css' %}" type="text/css"/>
+    <link rel="stylesheet" href="{% static 'css/templatemo-style.css' %}">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            padding-top: 60px; /* Agar navbar ostida contentni ko‘rish uchun */
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            position: fixed; /* Navbarni yuqorida joylashtirish */
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000; /* Navbarni boshqa elementlardan ustun qilish */
+            background-color: transparent; /* Transparan fon */
+            box-shadow: none; /* Box-shadowni olib tashlash */
+            padding: 10px 0; /* To‘g‘ri joylashtirish */
+            display: flex;
+            align-items: center; /* Center items vertically */
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: #fff; /* Menu nomlari oq rangda */
+            flex-grow: 1; /* Allow the brand to take up available space */
+        }
+
+        .navbar-nav {
+            display: flex;
+            align-items: center; /* Align items vertically */
+            margin-left: auto; /* Align navbar items to the right */
+        }
+
+        .navbar-nav .nav-link {
+            font-size: 1.1rem;
+            margin-right: 20px;
+            color: #fff; /* Menyudagi matn oq rangda ko‘rinadi */
+            transition: color 0.3s, background-color 0.3s;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #f8f9fa;
+            background-color: rgba(255, 255, 255, 0.2); /* Hoverda fon rangini o‘zgartirish */
+            animation: hoverEffect 0.5s ease-in-out;
+        }
+
+        /* Card Styling */
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+            background-color: rgba(255, 255, 255, 0); /* Orqa fonni shaffof qilamiz */
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card-header {
+            background-color: #2D4860;
+            color: white;
+            font-weight: bold;
+        }
+
+        .card-body {
+            padding: 15px;
+        }
+
+        .btn-view {
+            background-color: #1e40af;
+            color: white;
+            border-radius: 5px;
+            padding: 10px;
+            text-decoration: none;
+        }
+
+        .btn-view:hover {
+            background-color: #1558a1;
+        }
+
+        /* Animations */
+        @keyframes fadeInAnimation {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            0% { transform: translateY(-100%); }
+            100% { transform: translateY(0); }
+        }
+
+        @keyframes hoverEffect {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes fadeInTable {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Adjust content margin to make room for navbar */
+        .page-container {
+            margin-top: 100px; /* Navbarga mos kelish uchun */
+        }
+
+    </style>
+</head>
+
+<body>
+<video autoplay muted loop id="bg-video">
+    <source src="{% static 'video/gfp-astro-timelapse.mp4' %}" type="video/mp4">
+</video>
+
+<div class="page-container">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="cd-slider-nav">
+                    <nav class="navbar navbar-expand-lg" id="tm-nav">
+                        <div class="navbar-brand" id="navbar-supported-content">
+                            <ul class="navbar-nav ml-auto">
+                                {% for yonalish in yonalishlar %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="?yonalish_id={{ yonalish.id }}">{{ yonalish.nomi }}</a>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid tm-content-container">
+        <div class="row">
+            {% if malumotlar %}
+            {% for malumot in malumotlar %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>{{ malumot.nomi }}</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>Date: {{ malumot.date }}</p>
+                        <a href="{{ malumot.file.url }}" class="btn-view" download>Download File</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p>No data available for the selected category.</p>
+            {% endif %}
+        </div>
+    </div>
+    </div>
+</div>
+</body>
+
+</html>
